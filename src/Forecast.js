@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import S from 'string';
 
 // import svg images for icons
 import breezy from './icons/breezy.svg'
@@ -16,13 +15,13 @@ class Forecast extends Component {
     }
 
     displayImage(text) {
-        if ( S(text).contains("Breezy") ) {
+        if ( text.includes("Breezy") ) {
             return breezy;
-        } else if( S(text).contains("Cloudy")  ) {
+        } else if( text.includes("Cloudy")  ) {
             return cloudy;
-        } else if ( S(text).contains("Rain") || S(text).contains("Showers") ) {
+        } else if ( text.includes("Rain") || text.includes("Showers") ) {
             return rain;
-        } else if ( S(text).contains("Sun") ) {
+        } else if ( text.includes("Sun") ) {
             return sun;
         } else {
             console.error("ERROR: No icon prepared for " + text );
@@ -33,37 +32,37 @@ class Forecast extends Component {
     render() {
 
         const forecast = this.props.forecast;
-        const weatherItems = [];
+        const weatherItems = [];       
 
-        for(let i = 0; i < forecast.length; i++ ) {
+        for(let day of forecast ) {
             weatherItems.push(
-                <tr key={forecast[i].date}>
-                    <td>{forecast[i].date }</td>
-                    <td>{forecast[i].day }</td>
-                    <td> {forecast[i].high }&deg;C 
+                <tr key={ day.date }>
+                    <td>{ day.date }</td>
+                    <td>{ day.day }</td>
+                    <td> { day.high }&deg;C 
                     </td>
-                    <td>{forecast[i].low } &deg;C</td>
+                    <td>{ day.low } &deg;C</td>
                     <td> 
-                        <img src={this.displayImage(forecast[i].text)} alt={forecast[i].text } className="icons" />
-                        {forecast[i].text }
+                        <img src={ this.displayImage(day.text) } alt={ day.text } className="icons" />
+                        { day.text }
                     </td>
                 </tr>
-            )
+            );
         }
 
         return(
             <div className="container">
                 <table className="table table-dark">
-                    <thead>`
+                    <thead>
                         <tr>
                             <th>Date</th>
-                            <th>Day</th>
+                            <th>Day of the Week</th>
                             <th>High</th>
                             <th>Low</th>
                             <th>Description</th>
                         </tr>
                     </thead>
-                    <tbody className="table-striped">`
+                    <tbody className="table-striped">
                         {weatherItems}
                     </tbody>
                 </table>

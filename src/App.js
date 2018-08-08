@@ -5,7 +5,6 @@ import logo from './logo.svg';
 import warning from './icons/warning.svg';
 import './App.css';
 
-// My Components
 import Forecast from './Forecast';
 
 class App extends Component {
@@ -33,34 +32,30 @@ class App extends Component {
     // GET from Yahoo Weather API
     // If successful: prep data for Forecast Component (convert temp)
     axios.get(url)
-    .then( (response) => {
-      console.log('response', response);
-      let forecast = response.data.query.results.channel.item.forecast;
-      
-      for(let i = 0; i < forecast.length; i++ ) {
-        let high = parseInt(forecast[i].high, 10);
-        high = Math.round(fahrenheitToCelsius(high));
+      .then( (response) => {
+        //console.log('response', response);
+        let forecast = response.data.query.results.channel.item.forecast;
         
-        let low = parseInt(forecast[i].low, 10);
-        low = Math.round(fahrenheitToCelsius(low));
-        
-        forecast[i].high = high;
-        forecast[i].low = low;
-      }
-      
-      this.setState({ forecast: forecast });
-    })
-    .catch( (err)  => {
-      console.error(err);
-      this.setState({ error: true })
-    });    
+        for(let day of forecast) {
+          let high = Math.round(fahrenheitToCelsius(parseInt(day.high, 10)));
+          let low = Math.round(fahrenheitToCelsius(parseInt(day.low, 10)))
+
+          day.high = high;
+          day.low = low;
+        }
+
+        this.setState({ forecast: forecast });
+      })
+      .catch( (err)  => {
+        console.error(err);
+        this.setState({ error: true })
+      });    
   }
   
   handleChange(e) {
-    //console.log(e.target);
     const name = e.target.name;
     const value = e.target.value;
-    this.setState( { [name]: value} );
+    this.setState( {[name]: value } );
   }
   
   render() {
@@ -70,13 +65,13 @@ class App extends Component {
     if(this.state.error === true ) {
       error = (
         <div className="container">
-          <h4>Omg! Something went wrong, I couldn't get the weather data </h4>
+          <h4>Omg! Something, somewhere went wrong, Weather was not obtained.</h4>
           <img src={warning} alt="Error" className="icons" />
         </div>
       );
     }
 
-    // Table conditional render
+    // Forecast table conditional render
     let forecast = null;
     if(this.state.forecast.length !== 0 ) {
       forecast = <Forecast forecast={this.state.forecast} />;
@@ -115,7 +110,9 @@ class App extends Component {
       
       {error}
 
-        <div><small>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Cloud">Cloud</a> from <a href="https://www.flaticon.com/"     title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"     title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></small></div>      
+        <div>
+          <small>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Cloud">Cloud</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank" rel="noopener noreferrer">CC 3.0 BY</a></small>
+        </div>      
       </div>
       </div>
     );
