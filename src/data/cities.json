@@ -1,0 +1,130 @@
+{
+  "data": [
+    {
+      "id": 6050612,
+      "name": "Laval",
+      "country": "CA",
+      "coord": {
+        "lon": -73.749184,
+        "lat": 45.583382
+      }
+    },
+    {
+      "id": 6075357,
+      "name": "Mississauga",
+      "country": "CA",
+      "coord": {
+        "lon": -79.658302,
+        "lat": 43.578899
+      }
+    },
+    {
+      "id": 6091530,
+      "name": "Nova Scotia",
+      "country": "CA",
+      "coord": {
+        "lon": -62.99865,
+        "lat": 45.000149
+      }
+    },
+    {
+      "id": 6090786,
+      "name": "North Vancouver",
+      "country": "CA",
+      "coord": {
+        "lon": -123.069344,
+        "lat": 49.36636
+      }
+    },
+    {
+      "id": 6087844,
+      "name": "New Westminster",
+      "country": "CA",
+      "coord": {
+        "lon": -122.910919,
+        "lat": 49.206779
+      }
+    },
+    {
+      "id": 6087892,
+      "name": "Niagara Falls",
+      "country": "CA",
+      "coord": {
+        "lon": -79.066269,
+        "lat": 43.100121
+      }
+    },
+    {
+      "id": 6089661,
+      "name": "North Cowichan",
+      "country": "CA",
+      "coord": {
+        "lon": -123.685959,
+        "lat": 48.841331
+      }
+    },
+    {
+      "id": 6104111,
+      "name": "Pickering",
+      "country": "CA",
+      "coord": {
+        "lon": -79.132889,
+        "lat": 43.90012
+      }
+    },
+    {
+      "id": 6105815,
+      "name": "Pitt Meadows",
+      "country": "CA",
+      "coord": {
+        "lon": -122.689651,
+        "lat": 49.221191
+      }
+    },
+    {
+      "id": 6111962,
+      "name": "Port Moody",
+      "country": "CA",
+      "coord": {
+        "lon": -122.852631,
+        "lat": 49.28297
+      }
+    },
+    {
+      "id": 6049429,
+      "name": "Langley",
+      "country": "CA",
+      "coord": {
+        "lon": -122.652603,
+        "lat": 49.09967
+      }
+    },
+    {
+      "id": 5911606,
+      "name": "Burnaby",
+      "country": "CA",
+      "coord": {
+        "lon": -122.952629,
+        "lat": 49.266361
+      }
+    },
+    {
+      "id": 6085772,
+      "name": "Nanaimo",
+      "country": "CA",
+      "coord": {
+        "lon": -123.936012,
+        "lat": 49.16634
+      }
+    },
+  {
+    "id": 6173331,
+    "name": "Vancouver",
+    "country": "CA",
+    "coord": {
+      "lon": -123.119339,
+      "lat": 49.24966
+    }
+  }
+  ]
+}
