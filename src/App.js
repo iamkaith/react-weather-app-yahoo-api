@@ -6,7 +6,6 @@ import './App.css';
 
 import Forecast from './components/Forecast';
 
-const config = require('./config/config.json');
 const cities = require('./data/cities.json')
 
 class App extends Component {
@@ -41,7 +40,7 @@ class App extends Component {
   formSubmit(e) {
 
     e.preventDefault();
-    const key = config.production.appkey; 
+    const key = process.env.REACT_APP_SECRET;
     const param = this.state.city;
     const cityinfo = this.findCityID(param);
 
@@ -124,7 +123,7 @@ class App extends Component {
       <form onSubmit={this.formSubmit} >
         <div className="form-group">
           <select htmlFor="city" name="city" className="form-control" value={this.state.city} onChange={this.handleChange}>
-            <option value="" disabled selected>Select location</option>
+            <option value="" disabled defaultValue>Select location</option>
             {cities}
           </select>
           <button type="submit" className="btn btn-primary">Submit</button>
