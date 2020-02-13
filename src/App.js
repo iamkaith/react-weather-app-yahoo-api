@@ -44,7 +44,7 @@ class App extends Component {
     const param = this.state.city;
     const cityinfo = this.findCityID(param);
 
-    const url = `http://api.openweathermap.org/data/2.5/forecast?id=${cityinfo.id}&appid=${key}&units=metric`;
+    const url = `https://api.openweathermap.org/data/2.5/forecast?id=${cityinfo.id}&appid=${key}&units=metric`;
 
     // GET from OpenWeather API using CityID (https://openweathermap.org/)
     axios.get(url)
