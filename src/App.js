@@ -7,6 +7,11 @@ import './App.css';
 import Forecast from './components/Forecast';
 
 const cities = require('./data/cities.json')
+let config;
+
+if(process.env.NODE_ENV === "development") {
+  config = require('./config/config.json')
+}
 
 class App extends Component {
 
@@ -22,72 +27,85 @@ class App extends Component {
       city: "",
       cities: [], 
       forecast: [],
-      error: ""
+      error: "",
+      errormsg: ""
     };
   }
 
+  // Load cities data
   componentDidMount() {
     const list = cities.data;
     this.setState({ cities: list });
   }
 
+  // Find city ID for GET request below
   findCityID(cityname) {
     const list = cities.data;
     const result = list.find( city => city.name === cityname );
       return result;
   }
 
+
+  // GET from OpenWeather API using CityID (https://openweathermap.org/)
   formSubmit(e) {
 
     e.preventDefault();
-    const key = process.env.REACT_APP_SECRET;
+    const key = (process.env.NODE_ENV === "development" ? config.development.appkey : process.env.REACT_APP_SECRET); 
+
     const param = this.state.city;
-    const cityinfo = this.findCityID(param);
+    
+    if(param === "") {
+      this.setState({ error: true, errormsg: "Whoops! Please select a location and try again." });
 
-    const url = `https://api.openweathermap.org/data/2.5/forecast?id=${cityinfo.id}&appid=${key}&units=metric`;
+    } else {
+    
+      const cityinfo = this.findCityID(param);
+      const url = `https://api.openweathermap.org/data/2.5/forecast?id=${cityinfo.id}&appid=${key}&units=metric`;
 
-    // GET from OpenWeather API using CityID (https://openweathermap.org/)
-    axios.get(url)
-      .then( (response) => {
-        console.log('response', response);
-        let data = response.data.list;
-        let forecast = [];
+      axios.get(url)
+        .then( (response) => {
+          let data = response.data.list;
+          let forecast = [];
 
-        for(let day of data) {
-          let date = this.getDate(day.dt_txt);
-          const options = { weekday: 'long', month:'short', day: 'numeric', hour:'numeric' };
+          for(let day of data) {
+            let date = this.getDate(day.dt_txt);
+            const options = { weekday: 'long', month:'short', day: 'numeric', hour:'numeric' };
 
-          day.datestring = date.toLocaleDateString(undefined, options);
-          forecast.push(day);
-        }
+            day.datestring = date.toLocaleDateString(undefined, options);
+            forecast.push(day);
+          }
 
-        this.setState({ forecast: forecast });
+          this.setState({ forecast: forecast });
 
-      })
-      .catch( (err)  => {
-        console.error(err);
-        this.setState({ error: true })
-      });    
+        })
+        .catch( (err)  => {
+          console.error(err);
+          this.setState({ error: true, errormsg: "Whoops! Sorry! Something went wrong and weather information was not obtained." });
+        }); 
+    }
   }
-  
+ 
+  // Date transformation
   getDate(dt) {
-      return new Date(dt);
+    return new Date(dt);
   }
 
+  // Handle location picklist 
   handleChange(e) {
     const name = e.target.name;
     const value = e.target.value;
-    this.setState( {[name]: value } );
+    this.setState( {[name]: value, error: false, errormsg: "" } );
   }
- 
+
+  // Render
   render() {
 
     // Error conditional render
     let error = null;
     if(this.state.error === true ) {
       error = (
-        <div className="container">
-          <h4>Whoops! Sorry! Something went wrong and weather information was not obtained.</h4>
+        <div className="alert alert-danger">
+          <p> {this.state.errormsg} </p>
           <img src={warning} alt="Error" className="icons" />
         </div>
       );
@@ -103,8 +121,8 @@ class App extends Component {
     let cities = null;
     if(this.state.cities.length > 0 ) {
       cities = this.state.cities.map((city) => (
-      <option value={city.name} key={city.id}>{city.name}</option>
-      ))  
+      <option value={city.name} key={city.id} required>{city.name}</option>
+      )); 
     }
 
     return (
@@ -113,7 +131,7 @@ class App extends Component {
         <img src={logo} className="App-logo" alt="logo" />
       </header>
 
-        <div className="container">
+      <div className="container">
       
       <div className="jumbotron">
         <h1 className="display-4">Hey there!</h1>
@@ -134,8 +152,11 @@ class App extends Component {
       {error}
 
         <div>
-          <small>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Cloud">Cloud</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank" rel="noopener noreferrer">CC 3.0 BY</a></small>
-          <small>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a></small>
+          <p>
+            <small>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Cloud">Cloud</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank" rel="noopener noreferrer">CC 3.0 BY</a></small>
+            <br/>
+            <small>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a></small>
+          </p>
         </div>      
       </div>
       </div>

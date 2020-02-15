@@ -1,5 +1,5 @@
 {
-  "production": {
+  "development": {
     "app_name": "Weather Forecast App",
     "appkey": "Note: replace this string with the app key provided by OpenWeather API upon creating an account. For registration and installation instructions, check out their website: https://openweathermap.org/guide"
   }
