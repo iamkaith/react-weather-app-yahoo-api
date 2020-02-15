@@ -9,9 +9,9 @@ import Forecast from './components/Forecast';
 const cities = require('./data/cities.json')
 let config;
 
-if(process.env.NODE_ENV === "development") {
-  config = require('./config/config.json')
-}
+//if(process.env.NODE_ENV === "development") {
+// config = require('./config/config.json')
+//}
 
 class App extends Component {
 
