@@ -4,11 +4,7 @@ A little local weather app that fetches data from ~~Yahoo Weather API (https://d
 
 ## Working version
 
-~~Checkout a working version on https://glacial-meadow-45132.herokuapp.com/~~
-
-### Update! February 11, 2020
-
-Working version taken down temporarily, new version is a WIP. Stay tuned for more information!
+Checkout a working version on https://glacial-meadow-45132.herokuapp.com/
 
 ## Used
 
