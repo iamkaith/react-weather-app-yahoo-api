@@ -50,10 +50,9 @@ class App extends Component {
   formSubmit(e) {
 
     e.preventDefault();
-    const key = (process.env.NODE_ENV === "development" ? config.development.appkey : process.env.REACT_APP_SECRET); 
+    const key = process.env.REACT_APP_SECRET; 
 
     const param = this.state.city;
-    
     if(param === "") {
       this.setState({ error: true, errormsg: "Whoops! Please select a location and try again." });
 
